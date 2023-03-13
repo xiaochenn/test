@@ -15,16 +15,11 @@
 #     if ((y + j) % 10 == 0):
 #         X.append(y)
 
-# code_table = {"S":"...", "O":"---"}
-# S = "SOS"
-# t = list(S)
-# p = " "
-# for i in range(t):
-#     p = p + code_table[t] + " "
-# print(p)
+code_table = {"S":"...", "O":"---"}
+S = "SOS"
+p = " "
+for i in S:
+    p = p + code_table[i] + " "
+print(p)
             
-a = list()
-b = "sos"
-print(b)
 
-    
