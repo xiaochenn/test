@@ -17,9 +17,8 @@ if __name__ == '__main__':
     try:
         timu = []
         divisition = []
-        prime = []          #质数容器
 
-        for i in range(2,100):            #生成非质数容器和非质数容器
+        for i in range(2,100):            #生成非质数容器
             tem = [1,i]
             for j in range(2,i):
                 if (i % j == 0):
@@ -27,14 +26,43 @@ if __name__ == '__main__':
             tem.sort(reverse = True)
             if (len(tem) > 2):
                 divisition.append(tem)      #为非质数
-            else:
-                prime.append(i)         #为质数
         
-        n = sample(range(100),4)
+        n = sample(range(51),3)      #将加法加入题目列表
         for i in n:
             tem = [i,'+']
             t = add(i)
             tem.append(t)
-            print(tem)
+            tem.append('=')
+            tem.append(i+t)
+            timu.append(tem)
+
+        n = sample(divisition,4)    #将除法加入题目列表
+        for i in n:
+            tem = [i[0],'/']
+            t = choice(i[1:-1])     #除数取除自己和1的数，否则太简单了
+            tem.append(t)
+            tem.append('=')
+            tem.append(i[0]//t)
+            timu.append(tem)
+        
+        n = sample(range(1,100),4)  #将减法加入题目列表
+        for i in n:
+            tem = [i,'-']
+            t = sub(i)
+            tem.append(t)
+            tem.append('=')
+            tem.append(i-t)
+            timu.append(tem)
+
+        n = sample(range(50),4)   #将乘法加入题目列表
+        for i in n:
+            tem = [i,'x']
+            t = mul(i)
+            tem.append(t)
+            tem.append('=')
+            tem.append(i * t)
+            timu.append(tem)
+
+        
     except:
         print("something wrong")
