@@ -20,6 +20,7 @@ if __name__ == '__main__':
         timu = []
         divisition = []
         timu.append(1)
+        timu.append(None)
         print(timu)
     except:
         pass
