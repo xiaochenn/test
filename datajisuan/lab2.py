@@ -14,24 +14,24 @@ def gaosi(a,b,n):
     print("gaosi:")
     x = []
     for k in range(n-1):
-        m = [0]*(k+1)
+        m = []
         a_tem = []
         b_tem = []
-        for i in range(n-k):
-            m.append(a[k][i][k]/a[k][k][k])
+        for i in range(k+1,n):
+            m.append(a[k][i-k][0]/a[k][0][0])
             a_tem2 = []
-            for j in range(n-k):   
-                a_tem2.append(a[k][i][j] - m[i]*a[k][k][j])
+            for j in range(n-k-1):   
+                a_tem2.append(a[k][i-k][1+j]- m[i-k-1]*a[k][0][1+j])
             a_tem.append(a_tem2)
-            b_tem.append(b[k][i] - m[i]*b[k][k])   
+            b_tem.append(b[k][i-k] - m[i-k-1]*b[k][0])   
         a.append(a_tem)
         b.append(b_tem)
     x_n = b[n-1][0]/a[n-1][0][0]
     x.append(x_n)
     for i in range(n-2,-1,-1):
-        x_i = (b[i][0]-sum(a[i][0][j]* x[j-1] for j in range(1,n-i)))/(a[i][0][0])
+        x_i = (b[i][0]-sum(a[i][0][j]* x[-j] for j in range(1,n-i)))/(a[i][0][0])
         x.append(x_i)
-    x.reverse
+    x.reverse()
     print(x)
 
 def liezhu(a,b,n):
@@ -43,7 +43,7 @@ def liezhu(a,b,n):
     b = [11,12,13,14]
     n = 4
     xigema = 0.000001
-    for k in range(0,n-1):
+    for k in range(n-1):
         i_k = get_max_row_in_column(a,k,n)
         if abs(a[i_k][i_k]) < xigema:
             print("det a = 0")
@@ -52,12 +52,12 @@ def liezhu(a,b,n):
             if i_k == k:
                 pass
             else:
-                a[i_k],a[k] = a[k],a[i_k]
+                (a[i_k],a[k]) = (a[k],a[i_k])
             for i in range(k+1,n):
                 a_ik = a[i][k]/a[k][k]
                 for j in range(k+1,n):
                     a[i][j] = a[i][j] - a_ik *a[k][j]
-                    b[i] = b[i] - a_ik * b[k]
+                b[i] = b[i] - a_ik * b[k]
     if abs(a[n-1][n-1]) < xigema:
         print("det a = 0")
         exit(0)
@@ -122,9 +122,5 @@ if __name__  == '__main__':
     liezhu(a,b,n)
     jocobi()
     gussseidel()
-    
-
-
-
 
     
