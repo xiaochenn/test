@@ -26,7 +26,7 @@ def make1with4(p2,m1,m2):
 #         pdfrw.PageMerge(page).add(watermark.pages[0]).render()
 #     writer = pdfrw.PdfWriter()
 #     writer.write(output,pdf)
-s
+
 def pdf4in1(input,output):
     pdf = pdfrw.PdfReader(input)
     m1 = pdfrw.PdfReader('model1.pdf')
