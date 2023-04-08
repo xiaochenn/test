@@ -32,7 +32,7 @@ def gaosi(a,b,n):
         x_i = (b[i][0]-sum(a[i][0][j]* x[-j] for j in range(1,n-i)))/(a[i][0][0])
         x.append(x_i)
     x.reverse()
-    print(x)
+    print(x,'\n')
 
 def liezhu(a,b,n):
     print("liezhuxiaoyuanfa:")
@@ -53,6 +53,7 @@ def liezhu(a,b,n):
                 pass
             else:
                 (a[i_k],a[k]) = (a[k],a[i_k])
+                (b[i_k],b[k]) = (b[k],b[i_k])
             for i in range(k+1,n):
                 a_ik = a[i][k]/a[k][k]
                 for j in range(k+1,n):
@@ -65,7 +66,8 @@ def liezhu(a,b,n):
         b[n-1] = b[n-1] / a[n-1][n-1]
         for i in range(n-2,-1,-1):
             b[i] = (b[i] - sum(a[i][j] * b[j] for j in range(i+1,n)))/a[i][i]
-    print(b)
+    print(b,'\n')
+
 def jocobi():
     print("jocobi:")
     a = [[14,2,1,5],
@@ -75,7 +77,7 @@ def jocobi():
     b = [11,12,13,14]
     x = [-1,-1,-1,5]
     n = 4
-    N = 100
+    N = 10000
     xigema = 0.001
     for k in range(N):
         y = []
@@ -83,11 +85,12 @@ def jocobi():
             y.append((b[i] - sum(a[i][j] * x[j] for j in range(n) if j != i))/a[i][i])
         e = max(abs(y[i]-x[i]) for i in range(n))
         if (e < xigema):
-            print(y)
+            print(k,'times')
+            print(y,'\n')
             exit(0)
         else:
             x = y    
-    print("defate")
+    print("defate with",N,"times",'\n')
 
 def gussseidel():
     print("gussseidel:")
@@ -110,10 +113,11 @@ def gussseidel():
             else:
                 e = abs(x[i] - t)
         if e < xigema:
-            print(k)
-            print(x)
+            print(k,"times")
+            print(x,'\n')
             exit(0)
     print("defate with",N,"times")
+    
 if __name__  == '__main__':
     a = [[[14,2,1,5],[8,17,2,10],[4,18,3,6],[12,26,11,20]]]
     b = [[11,12,13,14]]
