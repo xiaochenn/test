@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>801</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,76 +14,82 @@
    <string>supermarket</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>90</y>
-      <width>295</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="sizeIncrement">
-     <size>
-      <width>2</width>
-      <height>2</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>宋体</family>
-      <pointsize>20</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>超市管理系统</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>230</y>
-      <width>365</width>
-      <height>52</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>42</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="buy_btn">
-       <property name="text">
-        <string>购入</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="sold_btn">
-       <property name="text">
-        <string>售出</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="check_btn">
-       <property name="text">
-        <string>存货</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizeIncrement">
+         <size>
+          <width>2</width>
+          <height>2</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>宋体</family>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>超市商品管理系统</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>42</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="buy_btn">
+        <property name="text">
+         <string>购入</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sold_btn">
+        <property name="text">
+         <string>售出</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="check_btn">
+        <property name="text">
+         <string>定价上架</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>801</width>
      <height>26</height>
     </rect>
    </property>

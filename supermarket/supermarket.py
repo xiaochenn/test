@@ -1,6 +1,5 @@
 import sys
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import  QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QDoubleSpinBox,QSpinBox
+from PyQt5.QtWidgets import  QApplication,QMainWindow,QMessageBox,QTableWidgetItem,QDoubleSpinBox,QSpinBox,QWidget
 from Ui_total import Ui_MainWindow
 from Ui_buy import Ui_buywindow
 from Ui_sold import Ui_soldwindow
@@ -25,7 +24,7 @@ class mainwindow(QMainWindow):
         if replay == QMessageBox.Yes:
             self.close()
 
-class buywindow(QMainWindow):          #购买商品界面
+class buywindow(QWidget):          #购买商品界面
     def __init__(self):
         super().__init__()
         self.ui = Ui_buywindow()
@@ -76,18 +75,22 @@ class buywindow(QMainWindow):          #购买商品界面
         self.ui.buy_total.setText(str(self.buy_total))
 
 
-class soldwindow(QMainWindow):              #卖出商品界面
+class soldwindow(QWidget):              #卖出商品界面
     def __init__(self):
         super().__init__()
         self.ui = Ui_soldwindow()
         self.ui.setupUi(self)
-        #self.ui.sold_btn()
+        self.ui.sold_btn.clicked.connect(self.change)
+
+    def change(self):
+        for i in range(len(self.sold_item)):
+            self.sold_num.append(self.ui.soldWidget.cellWidget(i,3).value())
 
     def window_initial(self):
         self.sold_item = []
         self.sold_price = []
         self.sold_num_total = []
-        self.sold_num = [0] * len(self.sold_item)
+        self.sold_num = []
         self.ui.soldWidget.clear()
         self.ui.soldWidget.setHorizontalHeaderLabels(['商品', '售价', '库存', '出售件数'])
         self.ui.soldWidget.setRowCount(0)
@@ -107,13 +110,17 @@ class soldwindow(QMainWindow):              #卖出商品界面
 
     def open(self,item,sold_price,num):
         self.window_initial()
-        self.sold_item = item
-        self.sold_price = sold_price
-        self.sold_num_total = num
+        for i in range(len(item)):
+            if sold_price[i] != 0 and num[i] != 0:
+                self.sold_item.append(item[i])
+                self.sold_price.append(sold_price[i])
+                self.sold_num_total.append(num[i])
+            else:
+                continue
         self.paint()
         self.show()
 
-class checkwindow(QMainWindow):             #定价界面
+class checkwindow(QWidget):             #定价界面
     def __init__(self):
         super().__init__()
         self.ui = Ui_checkwindow()
@@ -166,7 +173,7 @@ class checkwindow(QMainWindow):             #定价界面
                 QMessageBox.information(self, "提示", "还有商品没有定价哦~", QMessageBox.Yes, QMessageBox.Yes)
                 break
         else:
-            QMessageBox.information(self, "提示", "定价成功", QMessageBox.Yes, QMessageBox.Yes)
+            QMessageBox.information(self, "提示", "上架成功", QMessageBox.Yes, QMessageBox.Yes)
     
 class control():
     def __init__(self):
@@ -189,6 +196,7 @@ class control():
         #窗口数据传递
         self.w2.ui.buy_btn.clicked.connect(self.buy)  #进货
         self.w4.ui.check_push.clicked.connect(self.set) #定价
+        self.w3.ui.sold_btn.clicked.connect(self.sold) #售出
 
     def buy(self): 
         for i in range(len(self.w2.buy_item)):
@@ -198,9 +206,20 @@ class control():
                 self.item.append(self.w2.buy_item[i])
                 self.buy_price.append(self.w2.buy_price[i])
                 self.num.append(self.w2.buy_num[i])
+                self.sold_price.append(0)
 
     def set(self):
         self.sold_price = self.w4.check_set
+
+    def sold(self):
+        for i in range(len(self.w3.sold_item)):
+            if self.num[self.item.index(self.w3.sold_item[i])] >= self.w3.sold_num[i]:
+                self.num[self.item.index(self.w3.sold_item[i])] -= self.w3.sold_num[i]
+            else:
+                QMessageBox.information(self.w3, "提示", " '{0}' 商品数量不足哦~".format(self.w3.sold_item[i]), QMessageBox.Yes, QMessageBox.Yes)
+                break
+        self.w3.close()
+        self.w3.open(self.item,self.sold_price,self.num)
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)

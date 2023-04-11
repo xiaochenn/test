@@ -13,71 +13,70 @@
   <property name="windowTitle">
    <string>sold</string>
   </property>
-  <widget class="QTableWidget" name="soldWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>11</y>
-     <width>751</width>
-     <height>391</height>
-    </rect>
-   </property>
-   <attribute name="horizontalHeaderDefaultSectionSize">
-    <number>187</number>
-   </attribute>
-   <attribute name="verticalHeaderMinimumSectionSize">
-    <number>30</number>
-   </attribute>
-   <attribute name="verticalHeaderDefaultSectionSize">
-    <number>37</number>
-   </attribute>
-   <column>
-    <property name="text">
-     <string>商品</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>售价</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>库存</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>出售件数</string>
-    </property>
-   </column>
-  </widget>
-  <widget class="QPushButton" name="sold_backbtn">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>490</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>返回</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="sold_btn">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>450</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>确认出售</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QTableWidget" name="soldWidget">
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>187</number>
+     </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>30</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>37</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>商品</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>售价</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>库存</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>出售件数</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="sold_btn">
+         <property name="text">
+          <string>确认出售</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="sold_backbtn">
+         <property name="text">
+          <string>返回</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections>
