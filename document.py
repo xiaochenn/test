@@ -2,10 +2,18 @@ import os
 import re
 import datetime
 import sys
-import PyPDF2
+#import PyPDF2
+import docx
 import pypdfium2
 from qtpy import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import  QApplication
+
+def getText(filename):
+    doc = docx.Document(filename)
+    fullText = []
+    for para in doc.paragraphs:
+        fullText.append(para.text)
+    return ''.join(fullText)
 
 class SearchWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -86,11 +94,13 @@ class SearchWindow(QtWidgets.QMainWindow):
                     if pdf:
                         try:
                             with open(file_path,'rb') as f:
+                                page = []
                                 pdf_reader = pypdfium2.PdfDocument(f)
                                 for i in range(len(pdf_reader)):
-                                    page = pdf_reader.get_page(i).get_textpage().get_text_range()
+                                    page.append(pdf_reader.get_page(i).get_textpage().get_text_range())
+                                    #page = pdf_reader.get_page(i).get_textpage().get_text_range()
                                 if chinese:
-                                    page = page.encode("utf-8", errors="ignore").decode("utf-8")
+                                    pass
                                 if regex:
                                     if re.search(keyword, page):
                                         result.append(file_path)
@@ -103,16 +113,15 @@ class SearchWindow(QtWidgets.QMainWindow):
                             pass
                     else:
                         try:
-                            with open(file_path, "r", encoding="utf-8") as f:
-                                content = f.read()
-                                if chinese:
-                                    page = page.encode("utf-8", errors="ignore").decode("utf-8")
-                                if regex:
-                                    if re.search(keyword, content):
-                                        result.append(file_path)
-                                else:
-                                    if keyword in content:
-                                        result.append(file_path)
+                            content = getText(file_path)
+                            # if chinese:
+                            #     page = page.encode("utf-8", errors="ignore").decode("utf-8")
+                            if regex:
+                                if re.search(keyword, content):
+                                    result.append(file_path)
+                            else:
+                                if keyword in content:
+                                    result.append(file_path)
                         except:
                             pass
 
