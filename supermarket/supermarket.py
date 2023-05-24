@@ -20,7 +20,7 @@ class mainwindow(QMainWindow):
         QMessageBox.information(self, "关于", "超市管理系统\t\t\t\t\n版本:1.0\n作者:潘奕臣\n学号:U202142540\n班级:计214", QMessageBox.Yes, QMessageBox.Yes)
     
     def myclose(self):
-        replay = QMessageBox.question(self, "提示", "是否退出系统", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        replay = QMessageBox.question(self, "提示", "是否退出系统      ", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if replay == QMessageBox.Yes:
             self.close()
 
@@ -33,16 +33,20 @@ class buywindow(QWidget):          #购买商品界面
         self.ui.buy_btn.clicked.connect(self.show_message)
 
     def show_message(self):
-        if self.buy_item:
-            QMessageBox.information(self, "提示", "购买成功", QMessageBox.Yes, QMessageBox.Yes)
+        if self.buy_item and  not 0 in self.buy_num and not 0 in self.buy_price:
+            QMessageBox.information(self, "提示", "购买成功              ", QMessageBox.Yes, QMessageBox.Yes)
+            self.buy_flag = 1
+        elif 0 in self.buy_num or 0 in self.buy_price:
+            QMessageBox.information(self, "提示", "价格和数量不能为0哦~           ", QMessageBox.Yes, QMessageBox.Yes)
         else:
-            QMessageBox.information(self, "提示", "尚未购买，先点击结算哦~", QMessageBox.Yes, QMessageBox.Yes)
+            QMessageBox.information(self, "提示", "尚未购买，先点击结算哦~           ", QMessageBox.Yes, QMessageBox.Yes)
 
     def window_initial(self):            
         self.buy_item = []
         self.buy_price = []
         self.buy_num = []
-        self.buy_total = 0
+        self.buy_total = 0.0
+        self.buy_flag = 0
         for i in range(5):
             item_tmp = eval(''.join('self.ui.buy_lineEdit'+str(i)))
             item_tmp.setText('')
@@ -170,10 +174,10 @@ class checkwindow(QWidget):             #定价界面
     def show_message(self):
         for i in range(len(self.check_item)):
             if (self.ui.checkWidget.cellWidget(i, 3).value() == 0):
-                QMessageBox.information(self, "提示", "还有商品没有定价哦~", QMessageBox.Yes, QMessageBox.Yes)
+                QMessageBox.information(self, "提示", "还有商品没有定价哦~         ", QMessageBox.Yes, QMessageBox.Yes)
                 break
         else:
-            QMessageBox.information(self, "提示", "上架成功", QMessageBox.Yes, QMessageBox.Yes)
+            QMessageBox.information(self, "提示", "上架成功             ", QMessageBox.Yes, QMessageBox.Yes)
     
 class control():
     def __init__(self):
@@ -193,6 +197,7 @@ class control():
         self.w2.ui.buy_back_btn.clicked.connect(self.w1.open)
         self.w4.ui.check_backbtn.clicked.connect(self.w1.open)
         self.w3.ui.sold_backbtn.clicked.connect(self.w1.open)
+
         #窗口数据传递
         self.w2.ui.buy_btn.clicked.connect(self.buy)  #进货
         self.w4.ui.check_push.clicked.connect(self.set) #定价
@@ -200,13 +205,14 @@ class control():
 
     def buy(self): 
         for i in range(len(self.w2.buy_item)):
-            if self.w2.buy_item[i] in self.item:
-                self.num[self.item.index(self.w2.buy_item[i])] += self.w2.buy_num[i]
-            else:
-                self.item.append(self.w2.buy_item[i])
-                self.buy_price.append(self.w2.buy_price[i])
-                self.num.append(self.w2.buy_num[i])
-                self.sold_price.append(0)
+            if self.w2.buy_flag == 1:
+                if self.w2.buy_item[i] in self.item:
+                    self.num[self.item.index(self.w2.buy_item[i])] += self.w2.buy_num[i]
+                else:
+                    self.item.append(self.w2.buy_item[i])
+                    self.buy_price.append(self.w2.buy_price[i])
+                    self.num.append(self.w2.buy_num[i])
+                    self.sold_price.append(0)
 
     def set(self):
         self.sold_price = self.w4.check_set
@@ -216,10 +222,25 @@ class control():
             if self.num[self.item.index(self.w3.sold_item[i])] >= self.w3.sold_num[i]:
                 self.num[self.item.index(self.w3.sold_item[i])] -= self.w3.sold_num[i]
             else:
-                QMessageBox.information(self.w3, "提示", " '{0}' 商品数量不足哦~".format(self.w3.sold_item[i]), QMessageBox.Yes, QMessageBox.Yes)
+                QMessageBox.information(self.w3, "提示", " '{0}' 商品数量不足哦~         ".format(self.w3.sold_item[i]), QMessageBox.Yes, QMessageBox.Yes)
                 break
+        else:
+            QMessageBox.information(self.w3, "提示", " '出售成功         ".format(self.w3.sold_item[i]), QMessageBox.Yes, QMessageBox.Yes)
+        self.check()
         self.w3.close()
         self.w3.open(self.item,self.sold_price,self.num)
+
+    def check(self):
+        i = 0
+        while (i < len(self.item)):
+            if self.num[i] == 0:
+                self.item.pop(i)
+                self.buy_price.pop(i)
+                self.num.pop(i)
+                self.sold_price.pop(i)
+            else:
+                i += 1
+                
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
